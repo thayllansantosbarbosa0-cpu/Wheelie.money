@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07110c">
+<title>WHEELIE.MONEY</title>
+<style>
+:root{
+  --bg:#07110c;--panel:#101c14;--green:#42f58a;
+  --text:#f4fff6;--muted:#9aafa0;--line:#263c2d;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;color:var(--text);font-family:Arial,sans-serif;
+  background:radial-gradient(ellipse at 50% 0%,#1d492c 0%,#07110c 58%);
+  min-height:100vh;
+}
+button,input{font:inherit}
+header{
+  position:sticky;top:0;z-index:5;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:17px 5%;background:#07110cf2;border-bottom:1px solid var(--line);
+  backdrop-filter:blur(12px)
+}
+.logo{font-weight:1000;font-size:20px;letter-spacing:-1px}
+.logo span{color:var(--green)}
+.tag{font-size:10px;color:var(--green);border:1px solid #315c3e;padding:7px 10px;border-radius:30px}
+main{max-width:1000px;margin:auto;padding:24px 16px 50px}
+.hero{
+  padding:30px 22px;border:1px solid #31583b;border-radius:24px;
+  background:linear-gradient(135deg,#173b24,#0c1710 75%);
+  box-shadow:0 18px 55px #0003
+}
+.eyebrow{color:var(--green);font-weight:bold;font-size:11px;letter-spacing:3px}
+h1{font-size:clamp(34px,8vw,55px);line-height:.98;margin:15px 0}
+p{color:var(--muted);line-height:1.6;font-size:14px}
+.btn{
+  display:block;width:100%;border:0;border-radius:13px;padding:15px;
+  background:var(--green);color:#06140a;font-weight:900;cursor:pointer;
+  transition:transform .15s,filter .15s
+}
+.btn:active{transform:scale(.98)}
+.btn.secondary{background:#1b2b20;color:#fff;border:1px solid #3a5240}
+.grid{display:grid;grid-template-columns:1fr;gap:15px;margin-top:16px}
+.card{background:#101c14;border:1px solid var(--line);border-radius:20px;padding:20px}
+.card h2{font-size:18px;margin:0 0 12px}
+.price{font-size:37px;font-weight:1000;color:var(--green);margin:16px 0}
+label{display:block;margin:17px 0 8px;color:#d1e3d5;font-size:13px}
+input{
+  display:block;width:100%;padding:15px;color:#fff;background:#08110b;
+  border:1px solid #344c39;border-radius:12px;outline:none
+}
+input:focus{border-color:var(--green)}
+.pix{
+  margin-top:17px;padding:14px;border-radius:12px;
+  background:#08110b;border:1px dashed #52735b;
+  color:#d5e9d9;font-size:12px;line-height:1.6;overflow-wrap:anywhere
+}
+.notice{padding:12px;border-radius:12px;background:#17251a;border:1px solid #354a37;color:#c5d9c9;font-size:12px;line-height:1.6;margin:14px 0}
+.hidden{display:none!important}
+.order{font-size:12px;color:var(--muted);margin-top:12px}
+.nav{display:flex;gap:8px;margin-top:17px}
+.nav button{flex:1;padding:13px 4px;font-size:11px}
+footer{text-align:center;color:#718777;font-size:11px;padding:22px}
+@media(min-width:680px){
+  main{padding-top:35px}
+  .hero{padding:42px}
+  .hero .btn{max-width:250px}
+  .grid{grid-template-columns:1fr 1fr}
+  .wide{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">WHEELIE<span>.MONEY</span></div>
+  <div class="tag">ÁREA DO JOGADOR</div>
+</header>
+
+<main>
+  <section id="inicio">
+    <div class="hero">
+      <div class="eyebrow">SUA PRÓXIMA EXPERIÊNCIA</div>
+      <h1>ACELERE.<br>DOMINE O GRAU.</h1>
+      <p>Entre na sua área e confira as opções disponíveis no WHEELIE.MONEY.</p>
+      <button class="btn" onclick="abrir('deposito')">ACESSAR DEPÓSITO ↗</button>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2>💳 Depósito</h2>
+        <p>Valor único para a solicitação.</p>
+        <div class="price">R$ 30,00</div>
+        <button class="btn" onclick="abrir('deposito')">DEPOSITAR</button>
+      </div>
+      <div class="card">
+        <h2>🏍️ WHEELIE.MONEY</h2>
+        <p>Interface adaptada para celular, tablet e computador.</p>
+        <button class="btn secondary" onclick="abrir('sobre')">SAIBA MAIS</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="deposito" class="hidden">
+    <div class="card">
+      <div class="eyebrow">SOLICITAÇÃO DE DEPÓSITO</div>
+      <h2 style="margin-top:12px">Depósito via Pix</h2>
+      <p>Informe seu nome para identificar a solicitação.</p>
+
+      <label for="nome">Nome completo</label>
+      <input id="nome" type="text" maxlength="100"
+             autocomplete="name" placeholder="Digite seu nome">
+
+      <div class="notice">
+        Valor fixo do pedido. Confira os dados do destinatário no aplicativo
+        do seu banco antes de autorizar qualquer transferência.
+      </div>
+
+      <div class="price">R$ 30,00</div>
+      <button class="btn" onclick="gerarPix()">DEPOSITAR</button>
+
+      <div id="resultado" class="hidden">
+        <div class="order" id="pedido"></div>
+        <h2 style="margin-top:20px">Código Pix</h2>
+        <div class="pix" id="codigoPix"></div>
+        <button class="btn secondary" style="margin-top:12px"
+                onclick="copiarPix()">COPIAR CÓDIGO PIX</button>
+        <div id="mensagem" class="order"></div>
+        <div class="notice">
+          Copiar o código não confirma o pagamento. A confirmação deve ser
+          verificada pelo destinatário; este HTML não confirma transferências
+          nem atualiza saldos automaticamente.
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn secondary" onclick="abrir('inicio')">← INÍCIO</button>
+    </div>
+  </section>
+
+  <section id="sobre" class="hidden">
+    <div class="card">
+      <h2>Sobre o WHEELIE.MONEY</h2>
+      <p>Site com layout responsivo. Para publicar pedidos compartilhados,
+      autenticação e notificações reais, conecte um backend seguro.</p>
+      <button class="btn secondary" onclick="abrir('inicio')">VOLTAR</button>
+    </div>
+  </section>
+
+  <footer>WHEELIE.MONEY · Todos os direitos reservados</footer>
+</main>
+
+<script>
+/*
+ * Pix informado pelo proprietário.
+ * Para uso público, confira destinatário e valor antes de publicar.
+ */
+const PIX =
+"00020126580014BR.GOV.BCB.PIX0136581bfc06-75d4-40fd-8eb0-d151695ee5f4520400005303986540530.005802BR5923Thayllan Santos Barbosa6009SAO PAULO62140510qxtvw656I0630466E8";
+
+function abrir(id){
+  ["inicio","deposito","sobre"].forEach(secao=>{
+    document.getElementById(secao).classList.toggle("hidden",secao!==id);
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function gerarPix(){
+  const nome=document.getElementById("nome").value.trim();
+  if(!nome){
+    alert("Digite seu nome para continuar.");
+    document.getElementById("nome").focus();
+    return;
+  }
+
+  // Identificador local de pedido; não é uma notificação enviada ao proprietário.
+  const numero="WM-"+Date.now().toString().slice(-9);
+
+  document.getElementById("pedido").textContent=
+    "Pedido nº "+numero+" · Nome: "+nome;
+  document.getElementById("codigoPix").textContent=PIX;
+  document.getElementById("mensagem").textContent=
+    "Código Pix pronto para copiar. Pagamento ainda não verificado.";
+  document.getElementById("resultado").classList.remove("hidden");
+}
+
+async function copiarPix(){
+  try{
+    await navigator.clipboard.writeText(PIX);
+    document.getElementById("mensagem").textContent=
+      "Código Pix copiado. Confira os dados no seu banco.";
+  }catch(e){
+    const area=document.createElement("textarea");
+    area.value=PIX;
+    area.style.position="fixed";
+    area.style.opacity="0";
+    document.body.appendChild(area);
+    area.select();
+    const ok=document.execCommand("copy");
+    area.remove();
+    document.getElementById("mensagem").textContent=ok
+      ?"Código Pix copiado. Confira os dados no seu banco."
+      :"Não foi possível copiar automaticamente. Selecione o código e copie.";
+  }
+}
+</script>
+</body>
+</html>
